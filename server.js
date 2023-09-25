@@ -1,5 +1,5 @@
 const express = require("express");
-const { MongoClient } = require('mongodb');
+const mongoose = require("mongoose");
 const cors = require("cors");
 const { studentsEnquiryRouter } = require("./routes/studentRegistration.routes");
 const dotenv = require("dotenv").config();
@@ -20,12 +20,14 @@ app.get('/',(req,res)=>{res.send('hello your study consultancy server is working
 app.use("/",studentsEnquiryRouter)
 
 const PORT = process.env.PORT || 8080;
-const url = process.env.MongoAtlas;
+const mongoDB = process.env.MongoAtlas;
 
 server.listen(PORT,()=> { 
-  const client = new MongoClient(url);
-  client
-    .connect()
+    mongoose
+    .connect(mongoDB, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
     .then(() => {
       console.log("connection successful to server");
     })
