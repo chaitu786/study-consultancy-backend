@@ -17,7 +17,7 @@ studentsEnquiryRouter.get("/studentsData", async (req, res) => {
 
 studentsEnquiryRouter.post("/studentEnquiry", async (req, res) => {
   const {
-    mobile,
+    phone,
     email,
     name,
     state,
@@ -25,15 +25,16 @@ studentsEnquiryRouter.post("/studentEnquiry", async (req, res) => {
     intrestCountry,
     preferredStudyLevel,
   } = req.body;
-  const { message, status, error,  statusCode  } = await createStudentEnquiry(
+  console.log(req.body, "asdkjbasd");
+  const { message, status, error, statusCode } = await createStudentEnquiry({
     name,
-    mobile,
+    phone,
     email,
     state,
     city,
     intrestCountry,
-    preferredStudyLevel
-  );
+    preferredStudyLevel,
+  });
   if (status) {
     res.status(statusCode).send({ message, status });
   } else {
@@ -42,7 +43,7 @@ studentsEnquiryRouter.post("/studentEnquiry", async (req, res) => {
 });
 
 studentsEnquiryRouter.get("/callBackData", async (req, res) => {
-  const { message, status, data , statusCode} = await getCallBackData();
+  const { message, status, data, statusCode } = await getCallBackData();
   if (status === "error") {
     return res.status(statusCode).send({ message, status });
   }
@@ -50,8 +51,12 @@ studentsEnquiryRouter.get("/callBackData", async (req, res) => {
 });
 
 studentsEnquiryRouter.post("/requestCallBack", async (req, res) => {
-  const { mobile, email, name, statusCode } = req.body;
-  const { message, status } = await getCallBackSubmission(name, mobile, email);
+  const { mobile, email, name } = req.body;
+  const { message, status, statusCode } = await getCallBackSubmission({
+    name,
+    mobile,
+    email,
+  });
   if (status) {
     res.status(statusCode).send({ message, status });
   } else {
