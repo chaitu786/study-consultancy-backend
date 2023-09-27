@@ -10,6 +10,7 @@ const getStudentsDataData = async () => {
       message: "students data obtained successfully",
       status: true,
       data: data,
+      statusCode : 200
     };
   } catch (err) {
     return { message: "something went wrong", status: "error", data: null };
@@ -43,19 +44,21 @@ const createStudentEnquiry = async (
       "mobile",
     ]);
     if (!validation.isValid) {
-      return { message: validation.error, status: false };
+      return { message: validation.error, status: false , statusCode : "400" };
     }
     await enquiryCollection.insertOne(newStudentData);
     return {
       message:
         "Congratulations! Your form has been successfully submitted , we will contact you shortly.",
       status: true,
+      statusCode : 201
     };
   } catch (error) {
     return {
       message: "something went wrong, please try after sometime",
       status: false,
       error,
+      statusCode : 500
     };
   }
 };
@@ -67,6 +70,7 @@ const getCallBackData = async () => {
       message: "callback data obtained successfully",
       status: true,
       data: data,
+      statusCode : 200
     };
   } catch (err) {
     return { message: "something went wrong", status: "error", data: null };
@@ -90,18 +94,20 @@ const getCallBackSubmission = async (name, mobile, email) => {
       "mobile",
     ]);
     if (!validation.isValid) {
-      return { message: validation.error, status: false };
+      return { message: validation.error, status: false,  statusCode : 400 };
     }
     await callbackCollection.insertOne(detailObj);
     return {
       message: "submitted successfully, we will contact you shortly.",
       status: true,
+      statusCode : 201
     };
   } catch (error) {
     return {
       message: "something went wrong, please try after sometime",
       status: false,
       error,
+      statusCode : 500
     };
   }
 };

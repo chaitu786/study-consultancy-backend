@@ -8,11 +8,11 @@ const {
 const studentsEnquiryRouter = Router();
 
 studentsEnquiryRouter.get("/studentsData", async (req, res) => {
-  const { message, status, data } = await getStudentsDataData();
+  const { message, status, data, statusCode } = await getStudentsDataData();
   if (status === "error") {
-    return res.status(404).send({ message, status });
+    return res.status(statusCode).send({ message, status });
   }
-  return res.status(200).send({ message, status, data });
+  return res.status(statusCode).send({ message, status, data });
 });
 
 studentsEnquiryRouter.post("/studentEnquiry", async (req, res) => {
@@ -25,7 +25,7 @@ studentsEnquiryRouter.post("/studentEnquiry", async (req, res) => {
     intrestCountry,
     preferredStudyLevel,
   } = req.body;
-  const { message, status, error } = await createStudentEnquiry(
+  const { message, status, error,  statusCode  } = await createStudentEnquiry(
     name,
     mobile,
     email,
@@ -35,27 +35,27 @@ studentsEnquiryRouter.post("/studentEnquiry", async (req, res) => {
     preferredStudyLevel
   );
   if (status) {
-    res.status(201).send({ message, status });
+    res.status(statusCode).send({ message, status });
   } else {
-    res.status(500).send({ message, status, error });
+    res.status(statusCode).send({ message, status, error });
   }
 });
 
 studentsEnquiryRouter.get("/callBackData", async (req, res) => {
-  const { message, status, data } = await getCallBackData();
+  const { message, status, data , statusCode} = await getCallBackData();
   if (status === "error") {
-    return res.status(404).send({ message, status });
+    return res.status(statusCode).send({ message, status });
   }
-  return res.status(200).send({ message, status, data });
+  return res.status(statusCode).send({ message, status, data });
 });
 
 studentsEnquiryRouter.post("/requestCallBack", async (req, res) => {
-  const { mobile, email, name } = req.body;
+  const { mobile, email, name, statusCode } = req.body;
   const { message, status } = await getCallBackSubmission(name, mobile, email);
   if (status) {
-    res.status(201).send({ message, status });
+    res.status(statusCode).send({ message, status });
   } else {
-    res.status(500).send({ message, status });
+    res.status(statusCode).send({ message, status });
   }
 });
 
