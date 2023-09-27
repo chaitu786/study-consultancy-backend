@@ -1,14 +1,12 @@
 const express = require("express");
-const { MongoClient } = require('mongodb');
 const cors = require("cors");
 const { studentsEnquiryRouter } = require("./routes/studentRegistration.routes");
-const { mongoServer } = require("./config/mongoServer");
+const { connectToDatabase } = require("./config/db");
 const dotenv = require("dotenv").config();
 
 const app = express();
 const server = require('http').Server(app);
-const client = new MongoClient(process.env.MongoAtlas);
-
+const PORT = process.env.PORT || 8080
 app.use(
     cors({
       origin: true,
@@ -22,15 +20,7 @@ app.use(express.json());
 app.get('/',(req,res)=>{res.send('hello your study consultancy server is working properly')});
 app.use("/",studentsEnquiryRouter)
 
-
-server.listen(process.env.PORT || 8080,()=> {
-  mongoServer(client)
-  .then(()=>{
-    console.log("connection successful to server");
-  })
-  .catch((err) => {
-    console.log(err, "Failed to connect to server");
-  })
-  .finally(() => client.close());
+connectToDatabase()
+server.listen(PORT,async()=> {
   console.log(`Listening on Port ${PORT}`);
 })

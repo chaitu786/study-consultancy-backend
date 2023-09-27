@@ -12,11 +12,11 @@ studentsEnquiryRouter.get("/studentsData", async(req,res)=>{
 
 studentsEnquiryRouter.post("/studentEnquiry", async (req,res) => {
     const { mobile,email,name,state,city,intrestCountry,preferredStudyLevel } = req.body
-    const { message, status } = await createStudentEnquiry(name,mobile,email,state,city,intrestCountry,preferredStudyLevel);
+    const { message, status, error } = await createStudentEnquiry(name,mobile,email,state,city,intrestCountry,preferredStudyLevel);
     if(status) {
         res.status(201).send({ message , status })
     }else{
-        res.status(500).send({ message , status })
+        res.status(500).send({ message , status , error })
     }
 })
 
@@ -29,7 +29,7 @@ studentsEnquiryRouter.get("/callBackData", async(req,res)=>{
 })
 
 
-studentsEnquiryRouter.post("/getCallBack", async (req,res) => {
+studentsEnquiryRouter.post("/getCallBackSubmit", async (req,res) => {
     const { mobile,email,name } = req.body
     const { message, status } = await getCallBackSubmission(name,mobile,email);
     if(status) {
