@@ -29,7 +29,7 @@ studentsEnquiryRouter.get("/callBackData", async(req,res)=>{
 })
 
 
-studentsEnquiryRouter.post("/getCallBackSubmit", async (req,res) => {
+studentsEnquiryRouter.post("/requestCallBack", async (req,res) => {
     const { mobile,email,name } = req.body
     const { message, status } = await getCallBackSubmission(name,mobile,email);
     if(status) {
