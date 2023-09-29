@@ -22,7 +22,7 @@ studentsEnquiryRouter.post("/studentEnquiry", async (req, res) => {
     name,
     state,
     city,
-    intrestCountry,
+    preferredCountry,
     preferredStudyLevel,
   } = req.body;
   console.log(req.body, "asdkjbasd");
@@ -32,7 +32,7 @@ studentsEnquiryRouter.post("/studentEnquiry", async (req, res) => {
     email,
     state,
     city,
-    intrestCountry,
+    preferredCountry,
     preferredStudyLevel,
   });
   if (status) {

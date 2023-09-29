@@ -23,7 +23,7 @@ const createStudentEnquiry = async ({
   phone,
   state,
   city,
-  intrestCountry,
+  preferredCountry,
   preferredStudyLevel,
 }) => {
   try {
@@ -33,7 +33,7 @@ const createStudentEnquiry = async ({
       email,
       state,
       city,
-      intrestCountry,
+      preferredCountry,
       preferredStudyLevel,
       date: new Date(),
     };
@@ -83,10 +83,10 @@ const getCallBackSubmission = async ({ name, mobile, email }) => {
       name,
       mobile,
       email,
-      isContacted: false,
-      isIntrested: false,
-      isNotIntrested: false,
+      isContacted: "Not Contacted",
+      isIntrested: "N/A",
       remarks: "",
+      date: new Date(),
     };
     let validation = validateRequestData(detailObj, [
       "name",
